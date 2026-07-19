@@ -70,6 +70,18 @@ describe("resolveReaction", () => {
     expect(result.emotion).toBe("asustado");
   });
 
+  it("classifies a mild frown as triste even when it would fall short of feliz/asustado's threshold", () => {
+    const result = resolveReaction({ mouthFrownLeft: 0.3, mouthFrownRight: 0.28 }, {});
+
+    expect(result.emotion).toBe("triste");
+  });
+
+  it("classifies a mild brow furrow as enojado even when it would fall short of feliz/asustado's threshold", () => {
+    const result = resolveReaction({ browDownLeft: 0.32, browDownRight: 0.3 }, {});
+
+    expect(result.emotion).toBe("enojado");
+  });
+
   it("returns a null imageSrc (the emoji-fallback signal) when the manifest has no presets for the detected emotion", () => {
     const result = resolveReaction({ mouthSmileLeft: 0.9, mouthSmileRight: 0.85 }, {});
 

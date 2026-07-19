@@ -36,9 +36,20 @@ function classifyEmotion(scores_: BlendshapeScores, threshold: number): Emotion 
     ),
   };
 
+  // triste/enojado lean on weaker blendshapes (mouth frown, brow-down) than feliz/asustado's
+  // strong ones (mouth smile, eye-wide) — a shared threshold leaves them flickering near the
+  // line under normal webcam noise, so they get a lower bar.
+  const candidateThreshold: Record<Exclude<Emotion, "neutral">, number> = {
+    feliz: threshold,
+    triste: threshold - 0.1,
+    enojado: threshold - 0.05,
+    asustado: threshold,
+  };
+
   let best: Emotion = "neutral";
-  let bestScore = threshold;
-  for (const [emotion, value] of Object.entries(candidates) as [Emotion, number][]) {
+  let bestScore = -Infinity;
+  for (const [emotion, value] of Object.entries(candidates) as [Exclude<Emotion, "neutral">, number][]) {
+    if (value <= candidateThreshold[emotion]) continue;
     if (value > bestScore) {
       best = emotion;
       bestScore = value;

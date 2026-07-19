@@ -3,6 +3,7 @@ import type { Corner } from "@/modules/emotion-mirror/lib/resolveNearestCorner";
 
 export const DETECTION_CONFIDENCE_THRESHOLD = 0.35;
 export const DETECTION_INTERVAL_MS = 400;
+export const NEUTRAL_HOLD_MS = 900;
 
 export const MOBILE_BREAKPOINT_PX = 899;
 export const DEFAULT_PIP_CORNER: Corner = "top-right";

@@ -8,7 +8,7 @@ import {
   type PresetManifest,
   type Reaction,
 } from "@/modules/emotion-mirror/lib/resolveReaction";
-import { DETECTION_INTERVAL_MS } from "@/shared/constants";
+import { DETECTION_INTERVAL_MS, NEUTRAL_HOLD_MS } from "@/shared/constants";
 import { dictionary } from "@/shared/dictionary";
 
 const WASM_BASE_URL = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm";
@@ -27,6 +27,7 @@ export function useEmotionDetector(
   const idleReaction = useMemo(() => resolveReaction({}, presetManifest), [presetManifest]);
   const [reaction, setReaction] = useState<Reaction>(idleReaction);
   const landmarkerRef = useRef<FaceLandmarker | null>(null);
+  const lastNonNeutralRef = useRef<{ reaction: Reaction; at: number } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -70,13 +71,24 @@ export function useEmotionDetector(
       const landmarker = landmarkerRef.current;
       if (!video || !landmarker || video.readyState < 2) return;
 
-      const result = landmarker.detectForVideo(video, performance.now());
+      const now = performance.now();
+      const result = landmarker.detectForVideo(video, now);
       const categories = result.faceBlendshapes?.[0]?.categories ?? [];
       const scores: BlendshapeScores = {};
       for (const category of categories) {
         scores[category.categoryName] = category.score;
       }
-      setReaction(resolveReaction(scores, presetManifest));
+
+      const nextReaction = resolveReaction(scores, presetManifest);
+      if (nextReaction.emotion !== "neutral") {
+        lastNonNeutralRef.current = { reaction: nextReaction, at: now };
+        setReaction(nextReaction);
+        return;
+      }
+
+      const held = lastNonNeutralRef.current;
+      if (held && now - held.at < NEUTRAL_HOLD_MS) return;
+      setReaction(nextReaction);
     };
 
     const interval = setInterval(tick, DETECTION_INTERVAL_MS);
