@@ -12,7 +12,7 @@ export function ReactionPanel({
   return (
     <div className="flex flex-col gap-3 rounded-3xl border border-[#C87C58]/35 bg-linear-to-b from-[#FFFDF9] to-[#FBF1E7] p-3.5 shadow-[0_24px_60px_rgba(80,50,25,0.1)]">
       <div
-        className={`relative flex min-h-[min(56vh,540px)] flex-1 items-center justify-center overflow-hidden rounded-2xl bg-[#F4EADD] ${
+        className={`relative flex min-h-[min(56vh,540px)] min-[900px]:max-h-[min(56vh,540px)] flex-1 items-center justify-center overflow-hidden rounded-2xl bg-[#F4EADD] ${
           expanded ? "max-[899px]:min-h-[min(70vh,600px)]" : ""
         }`}
       >

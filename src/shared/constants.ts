@@ -1,7 +1,18 @@
 import type { Emotion } from "@/modules/emotion-mirror/lib/resolveReaction";
+import type { Corner } from "@/modules/emotion-mirror/lib/resolveNearestCorner";
 
 export const DETECTION_CONFIDENCE_THRESHOLD = 0.35;
 export const DETECTION_INTERVAL_MS = 400;
+
+export const MOBILE_BREAKPOINT_PX = 899;
+export const DEFAULT_PIP_CORNER: Corner = "top-right";
+
+export const PIP_CORNER_POSITION_CLASS: Record<Corner, string> = {
+  "top-right": "max-[899px]:top-11 max-[899px]:right-8",
+  "top-left": "max-[899px]:top-11 max-[899px]:left-8",
+  "bottom-right": "max-[899px]:bottom-20 max-[899px]:right-8",
+  "bottom-left": "max-[899px]:bottom-20 max-[899px]:left-8",
+};
 
 export const EMOJI_BY_EMOTION: Record<Emotion, string> = {
   feliz: "😄",
