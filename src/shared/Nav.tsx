@@ -24,7 +24,7 @@ export function Nav() {
   return (
     <nav className="flex items-center justify-between px-8 py-4.5">
       <div className="flex items-center gap-2.5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#B44A2B] shadow-[0_4px_12px_rgba(180,74,43,0.35)]">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#E2231A] shadow-[0_4px_12px_rgba(226,35,26,0.35)]">
           <svg
             width="19"
             height="19"
@@ -44,7 +44,7 @@ export function Nav() {
       <div className="flex min-w-[132px] justify-end">
         <span
           key={emotion}
-          className="inline-flex w-[132px] animate-[pp-chip-in_0.45s_ease] items-center justify-center gap-2 rounded-full border border-[#B44A2B]/32 bg-[#F9E1D7] py-1.5 text-sm font-semibold text-[#B44A2B]"
+          className="inline-flex w-[132px] animate-[pp-chip-in_0.45s_ease] items-center justify-center gap-2 rounded-full border border-[#E2231A]/32 bg-[#F9E1D7] py-1.5 text-sm font-semibold text-[#E2231A]"
         >
           <svg
             width="17"

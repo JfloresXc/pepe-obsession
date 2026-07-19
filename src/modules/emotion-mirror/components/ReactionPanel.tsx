@@ -31,7 +31,7 @@ export function ReactionPanel({
         <span className="font-mono text-[11px] tracking-wider text-[#8A8375]">
           {dictionary.reaction.footerLabel}
         </span>
-        <span className="text-base font-extrabold tracking-tight text-[#B44A2B]">
+        <span className="text-base font-extrabold tracking-tight text-[#E2231A]">
           {EMOTION_LABEL[reaction.emotion]}
         </span>
       </div>

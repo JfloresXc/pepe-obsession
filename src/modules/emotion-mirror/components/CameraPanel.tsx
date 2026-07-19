@@ -93,7 +93,7 @@ export function CameraPanel({
         {isOn && (
           <>
             <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[11px] tracking-wider text-[#FBF7EF] max-[899px]:left-1.5 max-[899px]:top-1.5 max-[899px]:gap-1 max-[899px]:px-1.5 max-[899px]:py-0.5 max-[899px]:text-[8px]">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#E0562E]" />
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#141210]" />
               {dictionary.camera.live}
             </div>
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/70 px-4 py-1.5 font-mono text-xs text-[#FBF7EF] max-[899px]:hidden">

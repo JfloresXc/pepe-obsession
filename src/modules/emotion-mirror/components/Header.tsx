@@ -4,7 +4,7 @@ export function Header() {
   return (
     <header className="px-6 pb-1.5 pt-5.5 text-center">
       <div className="mb-4 flex justify-center gap-2.5">
-        <span className="rounded-full border border-[#B44A2B]/30 bg-[#F9E1D7] px-3 py-1.5 font-mono text-[11px] font-medium tracking-wider text-[#B44A2B]">
+        <span className="rounded-full border border-[#E2231A]/30 bg-[#F9E1D7] px-3 py-1.5 font-mono text-[11px] font-medium tracking-wider text-[#E2231A]">
           {dictionary.header.detectorBadge}
         </span>
         <span className="rounded-full border border-black/8 bg-white/55 px-3 py-1.5 font-mono text-[11px] tracking-wider text-[#57534B]">

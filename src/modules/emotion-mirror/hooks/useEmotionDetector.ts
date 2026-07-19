@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import {
   resolveReaction,
@@ -17,8 +17,6 @@ const MODEL_ASSET_URL =
 
 type ModelStatus = "loading" | "ready" | "error";
 
-const NEUTRAL_REACTION: Reaction = { emotion: "neutral", imageSrc: null };
-
 export function useEmotionDetector(
   videoRef: RefObject<HTMLVideoElement | null>,
   isCameraOn: boolean,
@@ -26,7 +24,8 @@ export function useEmotionDetector(
 ) {
   const [modelStatus, setModelStatus] = useState<ModelStatus>("loading");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [reaction, setReaction] = useState<Reaction>(NEUTRAL_REACTION);
+  const idleReaction = useMemo(() => resolveReaction({}, presetManifest), [presetManifest]);
+  const [reaction, setReaction] = useState<Reaction>(idleReaction);
   const landmarkerRef = useRef<FaceLandmarker | null>(null);
 
   useEffect(() => {
@@ -84,5 +83,5 @@ export function useEmotionDetector(
     return () => clearInterval(interval);
   }, [isCameraOn, modelStatus, videoRef, presetManifest]);
 
-  return { modelStatus, errorMessage, reaction: isCameraOn ? reaction : NEUTRAL_REACTION };
+  return { modelStatus, errorMessage, reaction: isCameraOn ? reaction : idleReaction };
 }
