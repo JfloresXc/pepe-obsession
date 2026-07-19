@@ -1,0 +1,3 @@
+# MediaPipe Tasks Vision for gesture detection
+
+The design mockup in `references/` prototyped emotion detection with `face-api.js`, which gives ready-made expression scores (happy/sad/angry/etc.) but has been unmaintained since ~2020 and loads via a CDN `<script>` tag. We're using `@mediapipe/tasks-vision` (`FaceLandmarker` with blendshapes) instead: actively maintained by Google, installs as a clean npm dependency, and gives more robust landmark-based detection. The tradeoff is that MediaPipe returns 52 raw blendshape scores rather than labeled emotions, so we write our own blendshape→emotion scoring heuristic instead of reusing the mockup's face-api.js-based one.
