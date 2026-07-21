@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pepe Obsession
 
-## Getting Started
+A web app that reads the visitor's facial expression from their webcam and mirrors it back as a
+Preset reaction image (or an emoji placeholder) of "Pepe". Client-side only — no camera frame,
+image, or detection result is ever sent to a server. Spanish UI.
 
-First, run the development server:
+See [`CONTEXT.md`](./CONTEXT.md) for the domain glossary (`Emotion`, `Preset image`) and
+[`DESIGN.md`](./DESIGN.md) for the visual/brand notes.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun run test    # Vitest — unit tests for the pure resolveReaction / resolveNearestCorner seams
+bun run lint    # ESLint
+bun run build   # production build (also runs the TypeScript check)
+```
 
-## Learn More
+## How it works
 
-To learn more about Next.js, take a look at the following resources:
+- The visitor turns on their camera (`emotion-mirror` module's `CameraPanel`).
+- `@mediapipe/tasks-vision`'s `FaceLandmarker` classifies facial blendshapes client-side, every
+  400ms, into one of the four target Emotions (`feliz`, `triste`, `enojado`, `asustado`) or the
+  `neutral` fallback — see ADR [0001](./docs/adr/0001-mediapipe-for-gesture-detection.md) for why
+  MediaPipe was chosen over the design mockup's `face-api.js`.
+- The reaction panel shows a Preset image for the detected Emotion if the site owner has supplied
+  one under `public/pepe/<emotion>/`, otherwise an emoji fallback.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Screaming architecture per [`AGENTS.md`](./AGENTS.md):
 
-## Deploy on Vercel
+- `src/modules/emotion-mirror/` — the feature: components, hooks (camera access, detection loop,
+  drag-to-corner), and the pure `lib/` seams (`resolveReaction`, `resolveNearestCorner`).
+- `src/shared/` — cross-cutting: the Spanish copy dictionary, tuning/UI constants, `Alert`, `Nav`,
+  `Footer`.
+- `src/core/` — reserved for app-wide concerns; not created yet, since nothing beyond
+  `app/layout.tsx` has needed it so far.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Docs and process
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Domain glossary + ADRs**: [`CONTEXT.md`](./CONTEXT.md), [`docs/adr/`](./docs/adr/) — see
+  [`docs/agents/domain.md`](./docs/agents/domain.md).
+- **Issue tracker**: local markdown tickets under [`.scratch/`](./.scratch/), one directory per
+  feature (`emotion-mirror/`, `camera-pip-drag/`), each with a `spec.md` and numbered `issues/`.
+  See [`docs/agents/issue-tracker.md`](./docs/agents/issue-tracker.md).
+- **Design notes**: [`DESIGN.md`](./DESIGN.md).

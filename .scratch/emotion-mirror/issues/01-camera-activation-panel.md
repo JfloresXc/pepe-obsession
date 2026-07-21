@@ -6,9 +6,18 @@ This ticket also introduces the minimal shared infrastructure this slice needs: 
 
 **Blocked by:** None — can start immediately.
 
-- [ ] The page shows a "turn on camera" call-to-action before anything activates.
-- [ ] Granting permission shows the visitor's own live video feed, mirrored (not reversed).
-- [ ] Denying permission shows a visible alert with a specific, human-readable message (not a silent failure or console-only error).
-- [ ] No camera present, or camera already in use by another app, each show their own specific alert message.
-- [ ] All UI copy (button label, alert messages) comes from the shared copy dictionary, not inline strings.
+**Status:** done
+
+- [x] The page shows a "turn on camera" call-to-action before anything activates.
+- [x] Granting permission shows the visitor's own live video feed, mirrored (not reversed).
+- [x] Denying permission shows a visible alert with a specific, human-readable message (not a silent failure or console-only error).
+- [x] No camera present, or camera already in use by another app, each show their own specific alert message.
+- [x] All UI copy (button label, alert messages) comes from the shared copy dictionary, not inline strings.
 - [ ] `emotion-mirror`, `shared`, and `core` module folders exist per the project's screaming-architecture convention.
+
+## Comments
+
+`src/core/` was intentionally never created — per the spec's module-structure decision, it's
+created lazily only once something app-wide is actually needed beyond `app/layout.tsx`. Nothing
+has needed it through tickets 01–04 or the later `camera-pip-drag` feature. `emotion-mirror` and
+`shared` exist and are in active use.

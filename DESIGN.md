@@ -34,3 +34,15 @@ wasn't part of the agreed scope.
 - `src/modules/emotion-mirror/components/Header.tsx`
 - `src/modules/emotion-mirror/components/ReactionPanel.tsx`
 - `src/modules/emotion-mirror/components/CameraPanel.tsx`
+
+## Neutral reaction shown before the camera turns on
+
+Before the visitor turns on their camera, the reaction panel now shows the real `neutral` Preset
+image immediately (not the 😐 emoji) — the movie-still with the rose bouquet obscuring the face.
+Real detection only starts once the camera is on; before that, the panel is a static "resting"
+shot, not a live reaction.
+
+Previously `useEmotionDetector`'s idle state was a hardcoded `{ emotion: "neutral", imageSrc: null }`,
+which always forced the emoji fallback regardless of what was in the Preset manifest. It now
+resolves through `resolveReaction({}, presetManifest)` instead, so it picks up a real neutral
+Preset image if one exists, same as any other Emotion would.

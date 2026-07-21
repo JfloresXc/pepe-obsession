@@ -4,9 +4,14 @@
 
 **Blocked by:** None — can start immediately.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Function signature takes the release point, viewport size, and panel size, and returns one of four corner identifiers (`top-left` | `top-right` | `bottom-left` | `bottom-right`).
-- [ ] Unit tests cover a clear case for each of the four quadrants of the viewport.
-- [ ] Unit tests cover a boundary/near-center case (release point roughly equidistant between two corners) with a deterministic expected result.
-- [ ] The function is pure — no DOM/browser APIs, no side effects — so it's testable with plain numeric inputs and no jsdom.
+- [x] Function signature takes the release point, viewport size, and panel size, and returns one of four corner identifiers (`top-left` | `top-right` | `bottom-left` | `bottom-right`).
+- [x] Unit tests cover a clear case for each of the four quadrants of the viewport.
+- [x] Unit tests cover a boundary/near-center case (release point roughly equidistant between two corners) with a deterministic expected result.
+- [x] The function is pure — no DOM/browser APIs, no side effects — so it's testable with plain numeric inputs and no jsdom.
+
+## Comments
+
+Implemented as `resolveNearestCorner` in `src/modules/emotion-mirror/lib/resolveNearestCorner.ts`,
+mirroring the `resolveReaction` seam's style. 5 tests, all passing.
